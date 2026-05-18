@@ -25,7 +25,7 @@ function Bell  ( {notification, connected, onClear} ) {
                     </button>
                     { open && (
                         <div className=" absolute right-0 top-9 w-7xl max-h-400 overflow-y-auto bg-gray-900 border rounded-8 p-3.5 border-blue-900 z-1000 shadow-2xl shadow-indigo-500 "> 
-
+                            ddfddssd
                         </div>
                     ) }
 
