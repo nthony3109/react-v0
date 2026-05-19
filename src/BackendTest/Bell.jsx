@@ -42,8 +42,12 @@ function Bell  ( {notification, connected, onClear} ) {
                                     )
                                   }
 
+
                         </div>
                     ) }
+                  <span style={{ fontSize: "0.7rem", color: connected ? "green" : "red", marginLeft: 6 }}>
+                          {connected ? "● Live" : "● Disconnected"}
+      </span>
 
             </div>
     )
