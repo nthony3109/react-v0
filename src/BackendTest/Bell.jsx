@@ -1,4 +1,5 @@
 import { useState } from "react";
+import NoticationItems from "./NotificationItems";
 
 function Bell  ( {notification, connected, onClear} ) {
     
@@ -25,9 +26,21 @@ function Bell  ( {notification, connected, onClear} ) {
                     </button>
                     { open && (
                         <div className=" absolute right-0 top-9 w-7xl max-h-400 overflow-y-auto bg-gray-900 border rounded-8 p-3.5 border-blue-900 z-1000 shadow-2xl shadow-indigo-500 "> 
-                            <div className="  ">
-                                
+                            <div className=" flex  justify-between mb-5  ">
+                               <strong>Notifications</strong>
+                               {
+                                unreadCount> 0 && (
+                                    <button onClick={onClear} className="text-2xl cursor-pointer" > clear all</button>
+                                )
+                               }
                                   </div>
+                                  {
+                                    notification.length ===0 ? ( 
+                                        <p className=" text-amber-200 align-center  "> No Notification yet</p>
+                                    ) : (
+                                        notification.map((n,i) => (<NoticationItems key={i}{...n} />))
+                                    )
+                                  }
 
                         </div>
                     ) }
