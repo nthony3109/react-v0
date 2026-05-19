@@ -1,10 +1,10 @@
 import { useState } from "react";
 import NoticationItems from "./NotificationItems";
 
-function Bell  ( {notification, connected, onClear} ) {
+function Bell  ( {notifications, connected, onClear} ) {
     
     const [open, setOpen] = useState(false);
-    const unreadCount = notification.length
+    const unreadCount = notifications.length
     const handleClick = ( ()=> {
         setOpen( 
             (prev) => !prev
@@ -35,7 +35,7 @@ function Bell  ( {notification, connected, onClear} ) {
                                }
                                   </div>
                                   {
-                                    notification.length ===0 ? ( 
+                                    notifications.length ===0 ? ( 
                                         <p className=" text-amber-200 align-center  "> No Notification yet</p>
                                     ) : (
                                         notification.map((n,i) => (<NoticationItems key={i}{...n} />))
