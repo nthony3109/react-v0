@@ -83,7 +83,7 @@ const InfoInput = () => {
         />
       </div>
 
-      <button onClick={handleSubmit} className="buton-style">
+      <button onClick={handleSubmit} className="button-style">
         Send Notification
       </button>
 
