@@ -64,7 +64,7 @@ const InfoInput = () => {
           name="message"
           value={form.message}
           onChange={handleChange}
-          placeholder="Enter message" className="input-style"
+          placeholder="Enter message" className="input-style text-red-500"
         />
       </div>
 
