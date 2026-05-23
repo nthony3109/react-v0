@@ -1,35 +1,43 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react";
+import { Client } from "@stomp/stompjs";
+import SockJS from "sockjs-client/dist/sockjs.min.js";
 
-function SocketConnection (url,topic) {
-    const [notification,setNotification] = useState ([]);
-    const [connected, setConnected] = useState(false)
-    const stompClientRef = useRef (null)
+const useWebSocket = (url, topic) => {
+  const [notifications, setNotifications] = useState([]);
+  const [connected, setConnected] = useState(false);
+  const clientRef = useRef(null);
 
-    useEffect ( () => {
-        const socket = new SockJS(url);
-        const stompClient = Stomp.over(socket);
-        stompClient.debug = null;
-        stompClient.connect({}, () => {
-            setConnected(true);
-
-            stompClient.subscribe(topic, (message) => {
-                const notification = JSON.parse (message.body);
-                setNotification( (prev) => [notification, ...prev])
-            });
-        }, (error) => {
-            console.error("websocket error ", error);
-            setConnected(false);
-        });
-        stompClientRef.current = stompClient;
-
-        return () => {
-            if (stompClientRef.current?.connected) {
-                stompClientRef.current.disconnect();
-            }
-        };
-    }, [url, topic]);
-    const clearNotifications = () => setNotification([]);
-    return {notification,connected, clearNotifications}
+  useEffect(() => {
+    const client = new Client ({
+      webSocketFactory: () => new SockJS(url),
+      onConnect: () => {
+        setConnected(true);
+        client.subscribe(topic, (message) => {
+          console.log("1. raw message.body:", message.body);
+  console.log("2. typeof message.body:", typeof message.body);
   
+  const raw1 = JSON.parse(message.body);
+  console.log("3. after first parse:", raw);
+  console.log("4. typeof after first parse:", typeof raw);
+          console.log("backend message :" + message.body)
+         const raw = JSON.parse(message.body);
+         const notification = typeof raw === "string" ? JSON.parse(raw) : raw;
+          setNotifications((prev) => [notification, ...prev]);
+          console.log("useState value: " + notification)
+        });
+      },
+      onDisconnect: () => setConnected(false),
+    });
+
+    client.activate();
+    clientRef.current = client;
+
+    return () => client.deactivate(); // cleanup on unmount
+  }, [url, topic]);
+
+  const clearNotifications = () => setNotifications([]);
+
+  return { notifications, connected, clearNotifications };
 };
-export default SocketConnection
+
+export default useWebSocket;
