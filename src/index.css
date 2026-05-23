@@ -1,1 +1,25 @@
 @import "tailwindcss";
+@tailwind utilities;
+
+
+.input-style {
+    width:  100%;
+    padding: o.5rem 0.7rem;
+    border-radius: 6;
+    border: 1px solid #ccc;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+};
+.button-style {
+    width: 100%;
+    padding: 0.7rem;
+    background: #1e1e2e;
+    color: white;
+    border: none;
+    font-size: 1rem; 
+    cursor: pointer;
+};
+
+.box {
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
